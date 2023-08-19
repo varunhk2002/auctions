@@ -1,0 +1,31 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Active Listings</h2>
+    <br>
+    {% for listing in listings %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 mt-3">
+                <div class="card">
+                    <div class="card-horizontal" style="display: flex; flex: 1 1 auto;">
+                        <div class="img-square-wrapper">
+                            <img class="" src="{{ listing.img_url }}" alt="Card image cap" style="width: 300px; height: 300px; padding: 10px">
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">{{ listing.title }}</h4>
+                            <p class="card-text">{{ listing.description }}</p>
+                            <b>₹ {{ listing.current_amt }}</b>
+                            <br>
+                            {{ listing.timestamp }}
+                            <br>
+                            <a href="{% url 'auctions:listing' listing.id %}" class="btn btn-primary">View Listing</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    
+{% endblock %}

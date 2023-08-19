@@ -1,0 +1,46 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Create a Listing</h2>
+    <br>
+    <div>
+        <form action="{% url 'auctions:create' %}" method="post" style="width: 500px; padding: 20px;">
+            {% csrf_token %}
+             <div class="form-group">
+                <label for="exampleInputEmail1">Listing name</label>
+                <input autofocus class="form-control" type="text" placeholder="Name" id="listing_name", name="title">
+             </div>
+             <br>
+             <div class="form-group">
+                <label for="exampleInputEmail1">Category</label>
+                <select name="category" autofocus class="form-control">
+                    <option value="" disabled selected>Category</option>
+                    <option value="phones">Phones</option>
+                    <option value="laptops">Laptops</option>
+                    <option value="audio">Audio</option>
+                    <option value="tablets">Tablets</option>
+                    <option value="accessories">Accessories</option>
+                </select>
+             </div>
+             <br>
+             <div class="form-group">
+                <label for="exampleInputEmail1">Description</label>
+                <textarea autofocus class="form-control" placeholder="Description" name="description"></textarea>
+             </div>
+             <br>
+             <div class="form-group">
+                <label for="exampleInputEmail1">Image URL</label>
+                <input autofocus class="form-control" type="text" name="img_url" placeholder="Image URL">
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Starting Bid</label>
+                <input autofocus class="form-control" type="text" name="bid" placeholder="Starting Bid">
+            </div>
+            <br>
+            <div class="form-group" style="width: 100px;">
+                <input autofocus class="form-control btn btn-primary" type="submit">
+            </div>
+        </form>
+    </div>
+{% endblock %}

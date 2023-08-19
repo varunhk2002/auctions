@@ -1,0 +1,106 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h2>Listing</h2>
+{% for listing in listings %}
+    <br>
+    <div>
+        <img src="{{ listing.img_url }}" style="width: 300px; height: 300px;">
+        <br>
+        <h4>{{ listing.title }}</h4>
+        <b>Category: {{ listing.category }}</b>
+        <br>
+        <p>{{ listing.description }}</p>
+        <br>
+        <b>Created by: {{ listing.created_by }}</b>
+        <br>
+        <b>Listed on: {{ listing.timestamp }}</b>
+        <br>
+        <br>
+        {% if won_check %}
+        <div class="alert alert-success" role="alert" style="width: fit-content;">
+            <h4 class="alert-heading">Congratulations! You successfully won the bid!</h4>
+        </div>
+        <br>
+        {% else %}
+        <h3><b>Current Price: ₹ {{ listing.current_amt }}</b></h3>
+        <br>
+        {% if creators == 2 %}
+        <b>Original Price: ₹ {{ listing.starting_bid }}</b>
+        {% endif %}
+        <br>
+        <br>
+        {% if creators == 2 %}
+            <form action="{% url 'auctions:close' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" value="{{ listing.id }}" name="listing_id">
+                <button autofocus class="form-control btn btn-primary" type="submit" style="width: fit-content;">Close Bid</button>
+            </form>
+        {% else %}
+            <form action="{% url 'auctions:watchlist' %}" method="post" style="width: 500px;">
+                {% csrf_token %}
+                <input type="hidden" value="{{ listing.id }}" name="listing_id">
+                {% if statements == 1 %}
+                <input type="hidden" value="0" name="listing_req">
+                <button autofocus class="form-control btn btn-primary" type="submit" style="width: fit-content;">Add to Watchlist</button>
+                {% else %}
+                <input type="hidden" value="1" name="listing_req">
+                <button autofocus class="form-control btn btn-primary" type="submit" style="width: fit-content;">Remove from Watchlist</button>
+                {% endif %}
+                
+            </form>
+            <hr style="border: 1px solid;">
+            <form style="width: 500px;" method="post" action="{% url 'auctions:bids' %}">
+                {% csrf_token %}
+                <h4>Place Bid</h4>
+                <input type="hidden" value="{{ listing.id }}" name="listing_id">
+                <input autofocus class="form-control" type="text" placeholder="Bid Amount" name="bid_amt">
+                <br>
+                <input autofocus class="form-control btn btn-primary" type="submit" style="width: 100px;">
+            </form>
+            {% if messages %}
+            {% for message in messages %}
+            {% if message.tags %}
+            <br>
+            <div class="alert alert-danger" role="alert">
+                {{ message.message }}
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            <hr style="border: 1px solid;">
+
+            
+        
+        {% endif %}
+        <br>
+        <div>
+            <h3>Comments:</h3>
+            <br>
+            <div>
+                <form style="width: 500px;" method="post" action="{% url 'auctions:comments' %}">
+                    {% csrf_token %}
+                    <textarea autofocus class="form-control" placeholder="Comment" name="comment"></textarea>
+                    <input type="hidden" value="{{ listing.id }}" name="listing_id">
+                    <br>
+                    <input type="submit" autofocus class="form-control btn btn-primary" value="Add Comment">
+                </form>
+            </div>
+            <br>
+            {% for comment in comments %}
+            <div>
+                <h6><b>Comment by {{ comment.username }}</b></h6>
+                <h6>{{ comment.timestamp }}</h6>
+                <p>{{ comment.comment }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+    </div>
+    
+        
+{% endfor %}
+
+    
+{% endblock %}

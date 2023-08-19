@@ -1,0 +1,18 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Categories</h2>
+    <br>
+    <h3>Choose a Category</h3>
+    <br>
+    <div>
+        {% for category in categories %}
+        <a type="button" class="btn btn-outline-primary btn-lg btn-block" href="{% url 'auctions:category' category %}" style="text-transform: capitalize;">{{ category }}</a>
+        {% endfor %}
+        <!-- <a type="button" class="btn btn-primary btn-lg btn-block">Phones</a>
+        <a type="button" class="btn btn-secondary btn-lg btn-block">Laptops</a>
+        <a type="button" class="btn btn-success btn-lg btn-block">Audio</a>
+        <a type="button" class="btn btn-warning btn-lg btn-block">Tablets</a>
+        <a type="button" class="btn btn-danger btn-lg btn-block">Accessories</a> -->
+    </div>
+{% endblock %}

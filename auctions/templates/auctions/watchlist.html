@@ -1,0 +1,30 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Watchlist</h2>
+    <br>
+    {% for watchlist in watchlists %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 mt-3">
+                <div class="card">
+                    <div class="card-horizontal" style="display: flex; flex: 1 1 auto;">
+                        <div class="img-square-wrapper">
+                            <img class="" src="{{ watchlist.img_url }}" alt="Card image cap" style="width: 300px; height: 300px; padding: 10px">
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">{{ watchlist.title }}</h4>
+                            <p class="card-text">{{ watchlist.description }}</p>
+                            <b>₹ {{ watchlist.current_amt }}</b>
+                            <br>
+                            {{ watchlist.timestamp }}
+                            <br>
+                            <a href="{% url 'auctions:listing' watchlist.id %}" class="btn btn-primary">View Listing</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}
